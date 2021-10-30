@@ -26,12 +26,13 @@ class Match:
         self.right = right
         self.winner = winner
 
-def read_matches(round_):
-    paragraphs = [x for x in round_lines.split('\n\n')]
+def read_matches(round_txt):
+    paragraphs = [x for x in round_txt.split('\n\n')]
 
     matches = []
     for paragraph in paragraphs:
-        lines = [line for line in lines if not line.startswith('#')]
+        lines = [line for line in paragraph.split('\n')
+                if not line.startswith('#')]
         if len(lines) < 2 or len(lines) > 3:
             print('wrong status:\n%s' % paragraph)
             return None
@@ -50,11 +51,11 @@ def read_status(status):
         return []
 
     with open(status, 'r') as f:
-        rounds = [x for x in f.read().strip().split('\n\n\n')]
+        rounds_txt = [x for x in f.read().strip().split('\n\n\n')]
 
     rounds = []
-    for round_ in rounds:
-        rounds.append(read_matches(round_))
+    for round_txt in rounds_txt:
+        rounds.append(read_matches(round_txt))
     return rounds
 
 def write_status(rounds, status_file):

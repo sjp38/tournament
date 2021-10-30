@@ -92,11 +92,6 @@ def run_game(title, candidates, rounds):
         while i < len(candidates):
             left = candidates[i]
             right = candidates[i + 1]
-            winner = None
-            if left == 'no-real-candidate':
-                winner = right
-            elif right == 'no-real-candidate':
-                winner = left
             round_.append(Match(left, right, None))
             i += 2
         rounds.append(round_)
@@ -105,6 +100,13 @@ def run_game(title, candidates, rounds):
     for round_ in rounds:
         for match in round_:
             if not match.winner:
+                if match.right == 'no-real-candidate':
+                    match.winner = match.left
+                    if match.winner != 'no-real-candidate':
+                        print('%s wins by default' % match.winner)
+                    match_made = True
+                    continue
+
                 selection = input('1: %s\n2: %s\n' % (match.left, match.right))
                 if selection == '1':
                     match.winner = match.left

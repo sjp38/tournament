@@ -66,7 +66,8 @@ def write_status(rounds, status_file):
             lines.append(match.right)
             if match.winner:
                 lines.append(match.winner)
-            lines.append('')
+            if match != round_[-1]:
+                lines.append('')
         lines.append('')
         lines.append('')
     with open(status_file, 'w') as f:

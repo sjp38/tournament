@@ -85,8 +85,8 @@ def add_fake_candidates(candidates):
 
 def run_game(title, candidates, rounds):
     if rounds == []:    # first game
-        add_fake_candidates(candidates)
         random.shuffle(candidates)
+        add_fake_candidates(candidates)
         i = 0
         round_ = []
         while i < len(candidates):

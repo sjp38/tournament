@@ -46,6 +46,9 @@ def read_matches(round_):
     return matches
 
 def read_status(status):
+    if not os.path.isfile(status):
+        return []
+
     with open(status, 'r') as f:
         rounds = [x for x in f.read().strip().split('\n\n\n')]
 
@@ -155,8 +158,8 @@ def main():
             help='file containing current state')
     args = parser.parse_args()
 
-    if not os.path.isfile(args.description) or not os.path.isfile(args.status):
-        print('description or status are not files')
+    if not os.path.isfile(args.description):
+        print('description file is not found')
         exit(1)
 
     title, candidates = read_description(args.description)

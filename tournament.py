@@ -173,6 +173,7 @@ def main():
     if args.action == 'run':
         rounds = run_game(title, candidates, rounds)
         write_status(rounds, args.status)
+        print_status(title, candidates, rounds)
     elif args.action == 'status':
         print_status(title, candidates, rounds)
     else:

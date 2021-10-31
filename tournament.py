@@ -146,8 +146,10 @@ def print_status(title, candidates, rounds):
     print(title)
     print('candidates:', ', '.join(candidates))
     for idx, round_ in enumerate(rounds):
-        print('%d round' % idx)
+        print('%d round (%d matches)' % (idx, len(round_)))
         for match in round_:
+            if match.left == 'None' and match.right == 'None':
+                break
             print('%s vs %s (winner: %s)' % (match.left, match.right,
                 match.winner if match.winner != None else 'not decided yet'))
         print()
@@ -173,6 +175,7 @@ def main():
     if args.action == 'run':
         rounds = run_game(title, candidates, rounds)
         write_status(rounds, args.status)
+        print('\ncurrent status:')
         print_status(title, candidates, rounds)
     elif args.action == 'status':
         print_status(title, candidates, rounds)

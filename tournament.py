@@ -79,7 +79,7 @@ def add_fake_candidates(candidates):
         exit(1)
     for i in range(1,10):
         if len(candidates) > (1<<i) and len(candidates) <= (1<<(i + 1)):
-            candidates += ['no-real-candidate'] * ((1<<(i + 1)) -
+            candidates += ['None'] * ((1<<(i + 1)) -
                     len(candidates))
             break
 
@@ -100,9 +100,9 @@ def run_game(title, candidates, rounds):
     for round_ in rounds:
         for match in round_:
             if not match.winner:
-                if match.right == 'no-real-candidate':
+                if match.right == 'None':
                     match.winner = match.left
-                    if match.winner != 'no-real-candidate':
+                    if match.winner != 'None':
                         print('%s wins by default' % match.winner)
                     match_made = True
                     continue

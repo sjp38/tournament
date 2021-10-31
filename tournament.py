@@ -107,7 +107,8 @@ def run_game(title, candidates, rounds):
                     match_made = True
                     continue
 
-                selection = input('1: %s\n2: %s\n' % (match.left, match.right))
+                selection = input('%s\n1. %s\n2. %s\nPlease select: ' %
+                        (title, match.left, match.right))
                 if selection == '1':
                     match.winner = match.left
                 elif selection == '2':

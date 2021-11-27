@@ -114,8 +114,6 @@ def run_game(title, candidates, rounds):
                     print()
                 elif match.right == 'None':
                     match.winner = match.left
-                    if match.winner != 'None':
-                        print('%s wins by default' % match.winner)
                     match_made = True
                     continue
 

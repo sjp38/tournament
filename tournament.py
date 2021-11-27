@@ -83,6 +83,16 @@ def add_fake_candidates(candidates):
                     len(candidates))
             break
 
+def get_losers(round_):
+    losers = []
+    for match_ in round_:
+        if match_.winner:
+            losers.append(match_.left
+                    if match_.winner == match_.right
+                    else match_.right)
+    random.shuffle(losers)
+    return losers
+
 def run_game(title, candidates, rounds):
     if rounds == []:    # first game
         random.shuffle(candidates)
@@ -101,13 +111,7 @@ def run_game(title, candidates, rounds):
         for match in round_:
             if not match.winner:
                 if match.left != 'None' and match.right == 'None':
-                    losers = []
-                    for match_ in round_:
-                        if match_.winner:
-                            losers.append(match_.left
-                                    if match_.winner == match_.right
-                                    else match_.right)
-                    random.shuffle(losers)
+                    losers = get_losers(round_)
                     match.right = losers[0]
                     print('%s comes up from the losers (%s)' % (
                         match.right, ', '.join(losers)))

@@ -90,8 +90,11 @@ def get_losers(rounds, exception):
             winner = match_.winner
             if winner:
                 loser = match_.left if winner == match_.right else match_.right
-                if loser != exception:
-                    losers.append(loser)
+                if loser in [exception, 'None']:
+                    continue
+                if loser in losers:
+                    continue
+                losers.append(loser)
     random.shuffle(losers)
     return losers
 

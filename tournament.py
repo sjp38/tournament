@@ -100,7 +100,19 @@ def run_game(title, candidates, rounds):
     for round_ in rounds:
         for match in round_:
             if not match.winner:
-                if match.right == 'None':
+                if match.left != 'None' and match.right == 'None':
+                    losers = []
+                    for match_ in round_:
+                        if match_.winner:
+                            losers.append(match_.left
+                                    if match_.winner == match_.right
+                                    else match_.right)
+                    random.shuffle(losers)
+                    match.right = losers[0]
+                    print('%s comes up from the losers (%s)' % (
+                        match.right, ', '.join(losers)))
+                    print()
+                elif match.right == 'None':
                     match.winner = match.left
                     if match.winner != 'None':
                         print('%s wins by default' % match.winner)

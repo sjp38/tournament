@@ -104,6 +104,19 @@ def build_first_round(candidates):
         i += 2
     return round_
 
+def build_next_round(last_round):
+    next_round = []
+    i = 0
+    while i < len(last_round):
+        left = last_round[i].winner
+        if len(last_round) > i + 1:
+            right = last_round[i + 1].winner
+        else:
+            right = 'None'
+        next_round.append(Match(left, right, None))
+        i += 2
+    return next_round
+
 def run_game(title, candidates, rounds):
     if rounds == []:    # first game
         rounds.append(build_first_round(candidates))
@@ -148,17 +161,7 @@ def run_game(title, candidates, rounds):
     if game_left:
         return rounds
 
-    next_round = []
-    i = 0
-    while i < len(rounds[-1]):
-        left = rounds[-1][i].winner
-        if len(rounds[-1]) > i + 1:
-            right = rounds[-1][i + 1].winner
-        else:
-            right = 'None'
-        next_round.append(Match(left, right, None))
-        i += 2
-    rounds.append(next_round)
+    rounds.append(build_next_round(rounds[-1]))
     return rounds
 
 def print_status(title, candidates, rounds):

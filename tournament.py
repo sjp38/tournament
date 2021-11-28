@@ -165,13 +165,21 @@ def run_game(title, candidates, rounds):
 def print_status(title, candidates, rounds):
     print(title)
     print('candidates:', ', '.join(candidates))
+    losers = {}
     for idx, round_ in enumerate(rounds):
         print('%d round (%d matches)' % (idx, len(round_)))
         for match in round_:
             if match.left == 'None' and match.right == 'None':
                 break
-            print('%s vs %s (winner: %s)' % (match.left, match.right,
-                match.winner if match.winner != None else 'not decided yet'))
+            line = '%s vs %s (winner: %s)' % (match.left, match.right,
+                match.winner if match.winner != None else 'not decided yet')
+            if match.left in losers:
+                line += ' # %s was a loser' % match.left
+            if match.right in losers:
+                line += ' # %s was a loser' % match.right
+            print(line)
+            losers[match.left if match.winner == match.right
+                    else match.right] = True
         print()
 
 def main():

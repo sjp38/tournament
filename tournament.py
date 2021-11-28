@@ -189,6 +189,8 @@ def main():
         exit(1)
 
     title, candidates = read_description(args.description)
+    if title == None and candidates == None:
+        exit(1)
     rounds = read_status(args.status)
 
     if args.action == 'run':

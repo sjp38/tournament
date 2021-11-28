@@ -171,13 +171,19 @@ def print_status(title, candidates, rounds):
         for match in round_:
             if match.left == 'None' and match.right == 'None':
                 break
-            line = '%s vs %s (winner: %s)' % (match.left, match.right,
-                match.winner if match.winner != None else 'not decided yet')
-            if match.left in losers:
-                line += ' # %s was a loser' % match.left
-            if match.right in losers:
-                line += ' # %s was a loser' % match.right
-            print(line)
+            left = match.left
+            if left in losers:
+                left += ' (was a loser)'
+
+            right = match.right
+            if right in losers:
+                right += ' (was a loser)'
+
+            winner = match.winner
+            if winner == None:
+                winner = 'not decided yet'
+
+            print('%s vs %s (winner: %s)' % (left, right, winner))
             losers[match.left if match.winner == match.right
                     else match.right] = True
         print()

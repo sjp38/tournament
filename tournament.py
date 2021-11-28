@@ -98,18 +98,21 @@ def get_losers(rounds, exception):
     random.shuffle(losers)
     return losers
 
+def build_first_round(candidates):
+    random.shuffle(candidates)
+    add_fake_candidates(candidates)
+    i = 0
+    round_ = []
+    while i < len(candidates):
+        left = candidates[i]
+        right = candidates[i + 1]
+        round_.append(Match(left, right, None))
+        i += 2
+    return round_
+
 def run_game(title, candidates, rounds):
     if rounds == []:    # first game
-        random.shuffle(candidates)
-        add_fake_candidates(candidates)
-        i = 0
-        round_ = []
-        while i < len(candidates):
-            left = candidates[i]
-            right = candidates[i + 1]
-            round_.append(Match(left, right, None))
-            i += 2
-        rounds.append(round_)
+        rounds.append(build_first_round(candidates))
 
     match_made = False
     for round_ in rounds:

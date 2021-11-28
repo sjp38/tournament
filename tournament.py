@@ -74,14 +74,8 @@ def write_status(rounds, status_file):
         f.write('\n'.join(lines))
 
 def add_fake_candidates(candidates):
-    if len(candidates) >= 1<<10:
-        print('too many candidates')
-        exit(1)
-    for i in range(1,10):
-        if len(candidates) > (1<<i) and len(candidates) <= (1<<(i + 1)):
-            candidates += ['None'] * ((1<<(i + 1)) -
-                    len(candidates))
-            break
+    if len(candidates) % 2 != 0:
+        candidates.append('None')
 
 def get_losers(rounds, exception):
     losers = []
@@ -158,7 +152,10 @@ def run_game(title, candidates, rounds):
     i = 0
     while i < len(rounds[-1]):
         left = rounds[-1][i].winner
-        right = rounds[-1][i + 1].winner
+        if len(rounds[-1]) > i + 1:
+            right = rounds[-1][i + 1].winner
+        else:
+            right = 'None'
         next_round.append(Match(left, right, None))
         i += 2
     rounds.append(next_round)

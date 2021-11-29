@@ -124,16 +124,12 @@ def run_game(title, candidates, rounds):
         for match in round_:
             if match.winner:
                 continue
-            if match.left != 'None' and match.right == 'None':
+            if match.right == 'None':
                 losers = get_losers(rounds, match.left)
                 match.right = losers[0]
                 print('%s comes up from the losers (%s)' % (
                     match.right, ', '.join(losers)))
                 print()
-            elif match.right == 'None':
-                match.winner = match.left
-                match_made = True
-                continue
 
             selection = input('%s\n1. %s\n2. %s\nPlease select: ' %
                     (title, match.left, match.right))

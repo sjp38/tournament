@@ -119,42 +119,36 @@ def run_game(title, candidates, rounds):
     if rounds == []:    # first game
         rounds.append(build_first_round(candidates))
 
-    match_made = False
-    for round_ in rounds:
-        for match in round_:
-            if match.winner:
-                continue
-            if match.right == 'None':
-                losers = get_losers(rounds, match.left)
-                match.right = losers[0]
-                print('%s comes up from the losers (%s)' % (
-                    match.right, ', '.join(losers)))
-                print()
+    round_ = rounds[-1]
 
-            selection = input('%s\n1. %s\n2. %s\nPlease select: ' %
-                    (title, match.left, match.right))
-            if selection == '1':
-                match.winner = match.left
-            elif selection == '2':
-                match.winner = match.right
-            else:
-                print('wrong selection')
-                exit(1)
-            match_made = True
-            break
-    if not match_made or len(rounds[-1]) == 1:
+    match_made = False
+    for match in round_:
+        if match.winner:
+            continue
+        if match.right == 'None':
+            losers = get_losers(rounds, match.left)
+            match.right = losers[0]
+            print('%s comes up from the losers (%s)' % (
+                match.right, ', '.join(losers)))
+            print()
+
+        selection = input('%s\n1. %s\n2. %s\nPlease select: ' %
+                (title, match.left, match.right))
+        if selection == '1':
+            match.winner = match.left
+        elif selection == '2':
+            match.winner = match.right
+        else:
+            print('wrong selection')
+            exit(1)
+        match_made = True
+        break
+    if not match_made or len(round_) == 1:
         print('The tournament is completed')
         return rounds
 
-    game_left = False
-    for match in rounds[-1]:
-        if match.winner == None:
-            game_left = True
-            break
-    if game_left:
-        return rounds
-
-    rounds.append(build_next_round(rounds[-1]))
+    if match == round_[-1]:
+        rounds.append(build_next_round(rounds[-1]))
     return rounds
 
 def print_status(title, candidates, rounds):

@@ -122,29 +122,30 @@ def run_game(title, candidates, rounds):
     match_made = False
     for round_ in rounds:
         for match in round_:
-            if not match.winner:
-                if match.left != 'None' and match.right == 'None':
-                    losers = get_losers(rounds, match.left)
-                    match.right = losers[0]
-                    print('%s comes up from the losers (%s)' % (
-                        match.right, ', '.join(losers)))
-                    print()
-                elif match.right == 'None':
-                    match.winner = match.left
-                    match_made = True
-                    continue
-
-                selection = input('%s\n1. %s\n2. %s\nPlease select: ' %
-                        (title, match.left, match.right))
-                if selection == '1':
-                    match.winner = match.left
-                elif selection == '2':
-                    match.winner = match.right
-                else:
-                    print('wrong selection')
-                    exit(1)
+            if match.winner:
+                continue
+            if match.left != 'None' and match.right == 'None':
+                losers = get_losers(rounds, match.left)
+                match.right = losers[0]
+                print('%s comes up from the losers (%s)' % (
+                    match.right, ', '.join(losers)))
+                print()
+            elif match.right == 'None':
+                match.winner = match.left
                 match_made = True
-                break
+                continue
+
+            selection = input('%s\n1. %s\n2. %s\nPlease select: ' %
+                    (title, match.left, match.right))
+            if selection == '1':
+                match.winner = match.left
+            elif selection == '2':
+                match.winner = match.right
+            else:
+                print('wrong selection')
+                exit(1)
+            match_made = True
+            break
         if match_made:
             break
     if not match_made or len(rounds[-1]) == 1:

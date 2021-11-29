@@ -146,8 +146,6 @@ def run_game(title, candidates, rounds):
                 exit(1)
             match_made = True
             break
-        if match_made:
-            break
     if not match_made or len(rounds[-1]) == 1:
         print('The tournament is completed')
         return rounds

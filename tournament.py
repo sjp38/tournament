@@ -116,8 +116,9 @@ def build_next_round(last_round):
     return next_round
 
 def run_game(title, candidates, rounds):
-    if rounds == []:    # first game
-        rounds.append(build_first_round(candidates))
+    if len(rounds) <= 0:
+        print('empty rounds?')
+        exit(1)
 
     round_ = rounds[-1]
 
@@ -198,10 +199,13 @@ def main():
     rounds = read_status(args.status)
 
     if args.action == 'run':
-        rounds = run_game(title, candidates, rounds)
-        write_status(rounds, args.status)
+        if rounds == []:    # first game
+            rounds.append(build_first_round(candidates))
         print('\ncurrent status:')
         print_status(title, candidates, rounds)
+
+        rounds = run_game(title, candidates, rounds)
+        write_status(rounds, args.status)
     elif args.action == 'status':
         print_status(title, candidates, rounds)
     else:

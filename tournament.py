@@ -208,9 +208,6 @@ def main():
         write_status(rounds, args.status)
     elif args.action == 'status':
         print_status(title, candidates, rounds)
-    else:
-        print('this is impossible')
-        exit(1)
 
 if __name__ == '__main__':
     main()

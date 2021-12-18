@@ -80,15 +80,16 @@ def add_fake_candidates(candidates):
 def get_losers(rounds, exception):
     losers = []
     for round_ in rounds:
-        for match_ in round_:
-            winner = match_.winner
-            if winner:
-                loser = match_.left if winner == match_.right else match_.right
-                if loser in [exception, 'None']:
-                    continue
-                if loser in losers:
-                    continue
-                losers.append(loser)
+        for match in round_:
+            winner = match.winner
+            if not winner:
+                continue
+            loser = match.left if winner == match.right else match.right
+            if loser in [exception, 'None']:
+                continue
+            if loser in losers:
+                continue
+            losers.append(loser)
     random.shuffle(losers)
     return losers
 

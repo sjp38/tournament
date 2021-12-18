@@ -101,10 +101,9 @@ def build_first_round(candidates):
     random.shuffle(candidates)
     add_fake_candidates(candidates)
     round_ = []
-    for i in range(0, len(candidates), 2):
-        left = candidates[i]
-        right = candidates[i + 1]
-        round_.append(Match(left, right, None))
+    nr_matches = len(candidates) // 2
+    for i in range(0, nr_matches):
+        round_.append(Match(candidates[i * 2], candidates[i * 2 + 1], None))
     return round_
 
 def build_next_round(last_round):

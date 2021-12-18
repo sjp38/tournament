@@ -100,13 +100,11 @@ def get_losers(rounds, exception):
 def build_first_round(candidates):
     random.shuffle(candidates)
     add_fake_candidates(candidates)
-    i = 0
     round_ = []
-    while i < len(candidates):
+    for i in range(0, len(candidates), 2):
         left = candidates[i]
         right = candidates[i + 1]
         round_.append(Match(left, right, None))
-        i += 2
     return round_
 
 def build_next_round(last_round):

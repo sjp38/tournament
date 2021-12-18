@@ -10,7 +10,7 @@ def read_description(description):
                 if (x != '' and not x.startswith('#'))]
     if len(description_lines) < 2:
         print('wrong description')
-        return None, None
+        exit(1)
 
     title = description_lines[0]
     candidates = description_lines[1:]
@@ -195,8 +195,6 @@ def main():
         exit(1)
 
     title, candidates = read_description(args.description)
-    if title == None and candidates == None:
-        exit(1)
     rounds = read_status(args.status)
 
     if args.action == 'run':

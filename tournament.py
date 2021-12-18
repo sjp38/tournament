@@ -14,6 +14,10 @@ def read_description(description):
 
     title = description_lines[0]
     candidates = description_lines[1:]
+    if 'None' in candidates:
+        print('Candidate name \'None\' is not allowed')
+        exit(1)
+
     return title, candidates
 
 class Match:

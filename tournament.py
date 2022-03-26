@@ -140,6 +140,8 @@ def create_image(left, right, images_dir):
     result = os.path.join(images_dir, '%s-%s.png' % (left, right))
     subprocess.check_output(['convert', left_resized, right_resized, '+append',
         result])
+    current = os.path.join(images_dir, 'current.png')
+    subprocess.check_output(['cp', result, current])
     return result
 
 def run_game(title, candidates, rounds, images_dir):

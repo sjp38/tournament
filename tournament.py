@@ -157,6 +157,7 @@ def run_game(title, candidates, rounds):
 def print_status(title, candidates, rounds):
     print(title)
     print('candidates:', ', '.join(candidates))
+    print()
     losers = {}
     for idx, round_ in enumerate(rounds):
         print('%d round (%d matches)' % (idx, len(round_)))

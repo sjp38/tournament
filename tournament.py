@@ -138,7 +138,7 @@ def create_image(left, right):
     subprocess.check_output(['convert', right_img, '-resize', '500',
         right_resized])
     result = '%s-%s.png' % (left, right)
-    subprocess.check_output(['convert', left_resized, right_resized, '-append',
+    subprocess.check_output(['convert', left_resized, right_resized, '+append',
         result])
     return result
 

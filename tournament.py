@@ -126,23 +126,23 @@ def get_image(filename_except_extension):
             return img_file
     return None
 
-def create_image(left, right):
-    left_img = get_image(os.path.join('images', left))
-    right_img = get_image(os.path.join('images', right))
+def create_image(left, right, images_dir):
+    left_img = get_image(os.path.join(images_dir, left))
+    right_img = get_image(os.path.join(images_dir, right))
     if left_img == None or right_img == None:
         return None
-    left_resized = os.path.join('images', '%s-resized.png' % left)
-    right_resized = os.path.join('images', '%s-resized.png' % right)
+    left_resized = os.path.join(images_dir, '%s-resized.png' % left)
+    right_resized = os.path.join(images_dir, '%s-resized.png' % right)
     subprocess.check_output(['convert', left_img, '-resize', '500',
         left_resized])
     subprocess.check_output(['convert', right_img, '-resize', '500',
         right_resized])
-    result = os.path.join('images', '%s-%s.png' % (left, right))
+    result = os.path.join(images_dir, '%s-%s.png' % (left, right))
     subprocess.check_output(['convert', left_resized, right_resized, '+append',
         result])
     return result
 
-def run_game(title, candidates, rounds):
+def run_game(title, candidates, rounds, images_dir):
     if len(rounds) <= 0:
         print('empty rounds?')
         exit(1)
@@ -161,7 +161,7 @@ def run_game(title, candidates, rounds):
             print()
 
         title_image = create_image(match.left.split()[0],
-                match.right.split()[0])
+                match.right.split()[0], images_dir)
         if title_image != None:
             print('title image is ready at %s' % title_image)
         selection = input('%s\n1. %s\n2. %s\nPlease select: ' %
@@ -219,6 +219,8 @@ def main():
             help='file containing description of the tournament')
     parser.add_argument('--status', metavar='<file>', default='status',
             help='file containing current state')
+    parser.add_argument('--images_dir', metavar='<dir>', default='images',
+            help='dir containing images')
     args = parser.parse_args()
 
     if not os.path.isfile(args.description):
@@ -234,7 +236,7 @@ def main():
         print('\ncurrent status:')
         print_status(title, candidates, rounds)
 
-        rounds = run_game(title, candidates, rounds)
+        rounds = run_game(title, candidates, rounds, args.images_dir)
         write_status(rounds, args.status)
     elif args.action == 'status':
         print_status(title, candidates, rounds)

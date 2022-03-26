@@ -3,6 +3,7 @@
 import argparse
 import os
 import random
+import subprocess
 
 def read_description(description):
     with open(description, 'r') as f:
@@ -131,7 +132,7 @@ def create_image(left, right):
     if left_img == None or right_img == None:
         return None
     result = '%s-%s.png' % (left, right)
-    suprocess.check_output(['convert', left_img, right_img, '-append', result])
+    subprocess.check_output(['convert', left_img, right_img, '-append', result])
     return result
 
 def run_game(title, candidates, rounds):

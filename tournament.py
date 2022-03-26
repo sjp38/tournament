@@ -152,7 +152,8 @@ def run_game(title, candidates, rounds):
                 match.right, ', '.join(losers)))
             print()
 
-        title_image = create_image(match.left, match.right)
+        title_image = create_image(match.left.split()[0],
+                match.right.split()[0])
         if title_image != None:
             print('title image is ready at %s' % title_image)
         selection = input('%s\n1. %s\n2. %s\nPlease select: ' %

@@ -131,8 +131,15 @@ def create_image(left, right):
     right_img = get_image(right)
     if left_img == None or right_img == None:
         return None
+    left_resized = '%s-resized.png' % left
+    right_resized = '%s-resized.png' % right
+    subprocess.check_output(['convert', left_img, '-resize', '500',
+        left_resized])
+    subprocess.check_output(['convert', right_img, '-resize', '500',
+        right_resized])
     result = '%s-%s.png' % (left, right)
-    subprocess.check_output(['convert', left_img, right_img, '-append', result])
+    subprocess.check_output(['convert', left_resized, right_resized, '-append',
+        result])
     return result
 
 def run_game(title, candidates, rounds):
